@@ -4,21 +4,21 @@ import 'package:ss_placeholder_view/src/values/strings.dart';
 import '../ssplaceholderview.dart';
 
 class LoadingConfig {
-  final String loadingTitle;
-  final String loadingSubtitle;
-  final LoaderName loadingWidgetName;
-  final Widget? loadingWidget;
-  final Color? loadingColor;
-  final double loadingSize;
+  final String title;
+  final String subtitle;
+  final LoaderName widgetName;
+  final Widget? widget;
+  final Color? color;
+  final double size;
   final bool isLoadingOnTop;
 
   LoadingConfig({
-    this.loadingTitle = AppStrings.holdOn,
-    this.loadingSubtitle = AppStrings.defaultLoadingSubtitle,
-    this.loadingWidgetName = LoaderName.threeBounce,
-    this.loadingWidget,
-    this.loadingColor,
-    this.loadingSize = 32,
+    this.title = AppStrings.holdOn,
+    this.subtitle = AppStrings.defaultLoadingSubtitle,
+    this.widgetName = LoaderName.threeBounce,
+    this.widget,
+    this.color,
+    this.size = 32,
     this.isLoadingOnTop = false,
   });
 }

@@ -14,7 +14,7 @@ class SSPlaceholder extends StatelessWidget {
   final ButtonConfig? buttonConfig;
   final TextStyle? titleTextStyle;
   final TextStyle? subTitleTextStyle;
-  final EmptyErrorConfig? emptyErrorConfig;
+  final ErrorConfig? errorConfig;
   final Widget child;
   final bool showPlaceHolder;
 
@@ -27,7 +27,7 @@ class SSPlaceholder extends StatelessWidget {
     this.buttonConfig,
     this.titleTextStyle,
     this.subTitleTextStyle,
-    this.emptyErrorConfig,
+    this.errorConfig,
     required this.child,
     required this.showPlaceHolder,
   }) : super(key: key);
@@ -40,22 +40,22 @@ class SSPlaceholder extends StatelessWidget {
     switch (state) {
       case PlaceHolderState.loading:
         {
-          title = loadingConfig?.loadingTitle;
-          subtitle = loadingConfig?.loadingSubtitle;
+          title = loadingConfig?.title;
+          subtitle = loadingConfig?.subtitle;
         }
         break;
 
       case PlaceHolderState.success:
         {
-          title = emptyErrorConfig?.emptyTitle;
-          subtitle = emptyErrorConfig?.emptySubtitle;
+          title = errorConfig?.emptyTitle;
+          subtitle = errorConfig?.emptySubtitle;
         }
         break;
 
       case PlaceHolderState.error:
         {
-          title = emptyErrorConfig?.errorTitle;
-          subtitle = emptyErrorConfig?.errorSubtitle;
+          title = errorConfig?.errorTitle;
+          subtitle = errorConfig?.errorSubtitle;
         }
         break;
 
@@ -75,8 +75,8 @@ class SSPlaceholder extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if (placeHolderImageConfig?.placeholderImage?.isNotEmpty ??
-                      false)
+                  if ((placeHolderImageConfig?.image?.isNotEmpty ?? false) ||
+                      (placeHolderImageConfig?.widget != null))
                     Flexible(
                       child: AspectRatio(
                         aspectRatio: 1,
@@ -87,8 +87,9 @@ class SSPlaceholder extends StatelessWidget {
                                 Theme.of(context).brightness == Brightness.dark
                                     ? placeHolderImageConfig
                                             ?.darkPlaceholderImage ??
-                                        placeHolderImageConfig?.placeholderImage
-                                    : placeHolderImageConfig?.placeholderImage,
+                                        placeHolderImageConfig?.image
+                                    : placeHolderImageConfig?.image,
+                            customPlaceHolder: placeHolderImageConfig?.widget,
                             animationName:
                                 placeHolderImageConfig?.animationName,
                             fit: BoxFit.contain,
@@ -157,12 +158,12 @@ class SSPlaceholder extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             height: 56,
-            child: (loadingConfig?.loadingWidget != null)
-                ? loadingConfig?.loadingWidget
+            child: (loadingConfig?.widget != null)
+                ? loadingConfig?.widget
                 : SpinKitLoader(
-                    loaderName: loadingConfig?.loadingWidgetName,
-                    color: loadingConfig?.loadingColor,
-                    size: loadingConfig?.loadingSize,
+                    loaderName: loadingConfig?.widgetName,
+                    color: loadingConfig?.color,
+                    size: loadingConfig?.size,
                   ),
           ),
         ),
@@ -178,12 +179,12 @@ class SSPlaceholder extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             height: 56,
-            child: (loadingConfig?.loadingWidget != null)
-                ? loadingConfig?.loadingWidget
+            child: (loadingConfig?.widget != null)
+                ? loadingConfig?.widget
                 : SpinKitLoader(
-                    loaderName: loadingConfig?.loadingWidgetName,
-                    color: loadingConfig?.loadingColor,
-                    size: loadingConfig?.loadingSize,
+                    loaderName: loadingConfig?.widgetName,
+                    color: loadingConfig?.color,
+                    size: loadingConfig?.size,
                   ),
           ),
         ),

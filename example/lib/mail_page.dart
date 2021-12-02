@@ -1,6 +1,7 @@
 import 'package:example/mail_tile.dart';
 import 'package:example/values/vectors.dart';
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 import 'package:ss_placeholder_view/ssplaceholderview.dart';
 
 class MailPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _MailPageState extends State<MailPage> {
   PlaceHolderState placeholderState = PlaceHolderState.loading;
   String selectedMenuItem = 'GIF';
   String placeholderImage = 'assets/christmas.gif';
+  Widget? placeholderWidget;
   int id = 1;
 
   @override
@@ -64,6 +66,8 @@ class _MailPageState extends State<MailPage> {
     );
   }
 
+  void _clearData() => mails.clear();
+
   void _getData() {
     _addData();
     Future.delayed(const Duration(milliseconds: 1500));
@@ -104,16 +108,8 @@ class _MailPageState extends State<MailPage> {
                 value: "SVG",
               ),
               const PopupMenuItem(
-                child: Text("Flare"),
-                value: "Flare",
-              ),
-              const PopupMenuItem(
-                child: Text("Rive"),
-                value: "Rive",
-              ),
-              const PopupMenuItem(
-                child: Text("Rive HTTP"),
-                value: "Rive HTTP",
+                child: Text("Custom"),
+                value: "Custom",
               ),
               const PopupMenuItem(
                 child: Text("GIF"),
@@ -131,25 +127,13 @@ class _MailPageState extends State<MailPage> {
               height: 10,
             ),
             const Padding(padding: EdgeInsets.only(top: 8)),
-            Visibility(
-              visible: false,
-              child: TextButton(
-                onPressed: _getData,
-                child: const Text(
-                  'Tap here to get Data',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xffEE5366),
-                  ),
-                ),
-              ),
-            ),
             Row(
               children: [
                 const SizedBox(width: 8),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      _clearData();
                       setState(() {
                         placeholderState = PlaceHolderState.loading;
                       });
@@ -165,6 +149,7 @@ class _MailPageState extends State<MailPage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      _clearData();
                       setState(() {
                         placeholderState = PlaceHolderState.success;
                       });
@@ -180,6 +165,7 @@ class _MailPageState extends State<MailPage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      _clearData();
                       setState(() {
                         placeholderState = PlaceHolderState.error;
                       });
@@ -205,18 +191,19 @@ class _MailPageState extends State<MailPage> {
                 showPlaceHolder: mails.isEmpty,
                 placeHolderImageConfig: PlaceHolderImageConfig(
                   extraPadding: const EdgeInsets.only(bottom: 10),
-                  placeholderImage: placeholderImage,
+                  image: placeholderImage,
+                  widget: placeholderWidget,
                   animationName: 'walk',
                 ),
                 loadingConfig: LoadingConfig(
-                  loadingTitle: 'Loading Title',
-                  loadingSubtitle: 'Loading subtitle',
-                  loadingWidgetName: LoaderName.threeBounce,
-                  loadingColor: const Color(0xffee5366),
-                  loadingSize: 40,
+                  title: 'Please Wait...',
+                  subtitle: 'Loading your data...',
+                  widgetName: LoaderName.threeBounce,
+                  color: const Color(0xffee5366),
+                  size: 40,
                   isLoadingOnTop: false,
                 ),
-                emptyErrorConfig: EmptyErrorConfig(
+                errorConfig: ErrorConfig(
                   emptyTitle: 'No Data Found',
                   emptySubtitle: 'Try again..!',
                   errorTitle: 'Error...',
@@ -252,18 +239,36 @@ class _MailPageState extends State<MailPage> {
   }
 
   void _changePlaceHolderImage(String? newValue) {
-    if (newValue == 'Image') {
-      placeholderImage = 'assets/loading.jpeg';
-    } else if (newValue == 'SVG') {
-      placeholderImage = Vectors.keyReleaseIllustration;
-    } else if (newValue == 'Flare') {
-      placeholderImage = 'assets/Penguin.flr';
-    } else if (newValue == 'Rive') {
-      placeholderImage = 'assets/off_road_car.riv';
-    } else if (newValue == 'Rive HTTP') {
-      placeholderImage = 'https://cdn.rive.app/animations/vehicles.riv';
-    } else if (newValue == 'GIF') {
-      placeholderImage = 'assets/christmas.gif';
+    switch (newValue) {
+      case 'Image':
+        placeholderWidget = null;
+        placeholderImage = 'assets/loading.png';
+        break;
+
+      case 'SVG':
+        placeholderWidget = null;
+        placeholderImage = Vectors.drawLoading;
+        break;
+
+      case 'Custom':
+        placeholderImage = '';
+        placeholderWidget = const SizedBox(
+          child: RiveAnimation.asset(
+            'assets/riv/liquid_download.riv',
+            fit: BoxFit.contain,
+          ),
+        );
+        break;
+
+      case 'GIF':
+        placeholderWidget = null;
+        placeholderImage = 'assets/christmas.gif';
+        break;
+
+      default:
+        placeholderWidget = null;
+        placeholderImage = 'assets/loading.png';
+        break;
     }
   }
 }

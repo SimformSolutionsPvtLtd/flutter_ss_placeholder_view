@@ -12,6 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  rive: ^0.9.1
   ss_placeholder_view:
     path: ../
 
@@ -29,6 +30,7 @@ flutter:
   assets:
     - assets/
     - assets/vectors/
+    - assets/riv/
   fonts:
     - family: BebasNeue
       fonts:
