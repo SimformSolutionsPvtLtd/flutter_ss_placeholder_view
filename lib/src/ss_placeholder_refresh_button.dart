@@ -7,13 +7,12 @@ class SSPlaceholderRefreshButton extends StatelessWidget {
   final String? title;
   final double? width;
   final double? height;
-  final double? fontSize;
   final bool loading;
   final bool enableFeedback;
   final Widget? child;
   final EdgeInsets? padding;
   final Color? color;
-  final Color? textColor;
+  final TextStyle? buttonTextStyle;
   final OutlinedBorder? shape;
   final Widget? icon;
 
@@ -24,12 +23,11 @@ class SSPlaceholderRefreshButton extends StatelessWidget {
     this.title,
     this.width = double.maxFinite,
     this.height,
-    this.fontSize,
     this.loading = false,
     this.child,
     this.padding,
     this.color,
-    this.textColor,
+    this.buttonTextStyle,
     this.enableFeedback = true,
     this.shape,
     this.icon,
@@ -45,7 +43,7 @@ class SSPlaceholderRefreshButton extends StatelessWidget {
           shape: shape,
           padding: padding,
           enableFeedback: !loading && enableFeedback,
-          primary: color,
+          backgroundColor: color,
         ),
         onPressed: enabled && !loading ? onTap : null,
         child: loading
@@ -69,11 +67,13 @@ class SSPlaceholderRefreshButton extends StatelessWidget {
                       child: Text(
                         title ?? '',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: fontSize ?? 18,
-                          height: icon != null ? 1.2 : 1,
-                          color: textColor ?? Colors.white,
-                        ),
+                        style: buttonTextStyle ??
+                            TextStyle(
+                              fontSize: 18,
+                              height: icon != null ? 1.2 : 1,
+                              color: Colors.white,
+                              fontFamily: 'RobotoMono',
+                            ),
                       ),
                     ),
                   ],

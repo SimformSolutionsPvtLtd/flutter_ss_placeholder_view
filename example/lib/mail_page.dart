@@ -13,7 +13,7 @@ class MailPage extends StatefulWidget {
 class _MailPageState extends State<MailPage> {
   List<Mail> mails = [];
   PlaceHolderState placeholderState = PlaceHolderState.loading;
-  String dropdownValue = 'GIF';
+  String selectedMenuItem = 'GIF';
   String placeholderImage = 'assets/christmas.gif';
   int id = 1;
 
@@ -75,56 +75,124 @@ class _MailPageState extends State<MailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: const Color(0xffEE5366),
+        centerTitle: true,
+        title: const Text(
+          'Empty PlaceHolder',
+          style: TextStyle(color: Colors.white),
+        ),
+        actions: [
+          PopupMenuButton(
+            icon: const Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+            onSelected: (value) {
+              setState(() {
+                selectedMenuItem = value as String;
+                _changePlaceHolderImage(selectedMenuItem);
+              });
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                child: Text("Image"),
+                value: "Image",
+              ),
+              const PopupMenuItem(
+                child: Text("SVG"),
+                value: "SVG",
+              ),
+              const PopupMenuItem(
+                child: Text("Flare"),
+                value: "Flare",
+              ),
+              const PopupMenuItem(
+                child: Text("Rive"),
+                value: "Rive",
+              ),
+              const PopupMenuItem(
+                child: Text("Rive HTTP"),
+                value: "Rive HTTP",
+              ),
+              const PopupMenuItem(
+                child: Text("GIF"),
+                value: "GIF",
+              ),
+            ],
+          )
+        ],
+      ),
       body: SafeArea(
         bottom: false,
         child: Column(
           children: <Widget>[
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             const Padding(padding: EdgeInsets.only(top: 8)),
             Visibility(
-              visible: mails.isEmpty,
+              visible: false,
               child: TextButton(
                 onPressed: _getData,
-                child: const Text('Tap here to get Data'),
+                child: const Text(
+                  'Tap here to get Data',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xffEE5366),
+                  ),
+                ),
               ),
             ),
-            Visibility(
-              visible: mails.isEmpty,
-              child: DropdownButton<String>(
-                value: dropdownValue,
-                icon: const Icon(Icons.arrow_drop_down),
-                elevation: 16,
-                style: const TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.bold,
+            Row(
+              children: [
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        placeholderState = PlaceHolderState.loading;
+                      });
+                    },
+                    child: const Text('Loading'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                    ),
+                  ),
                 ),
-                underline: Container(
-                  height: 2,
-                  color: Colors.redAccent,
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        placeholderState = PlaceHolderState.success;
+                      });
+                    },
+                    child: const Text('Success'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                    ),
+                  ),
                 ),
-                onChanged: (String? newValue) {
-                  _changePlaceHolderImage(newValue);
-                  setState(() {
-                    dropdownValue = newValue!;
-                  });
-                },
-                items: <String>[
-                  'Image',
-                  'SVG',
-                  'Flare',
-                  'Rive',
-                  'Rive HTTP',
-                  'GIF'
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        placeholderState = PlaceHolderState.error;
+                      });
+                    },
+                    child: const Text('Error'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+              ],
             ),
             Expanded(
               child: SSPlaceholder(
@@ -143,7 +211,7 @@ class _MailPageState extends State<MailPage> {
                 loadingConfig: LoadingConfig(
                   loadingTitle: 'Loading Title',
                   loadingSubtitle: 'Loading subtitle',
-                  loadingWidgetName: LoaderName.hourGlass,
+                  loadingWidgetName: LoaderName.threeBounce,
                   loadingColor: const Color(0xffee5366),
                   loadingSize: 40,
                   isLoadingOnTop: false,
@@ -157,16 +225,22 @@ class _MailPageState extends State<MailPage> {
                 ),
                 buttonConfig: ButtonConfig(
                   buttonColor: const Color(0xffee5366),
-                  buttonTextColor: Colors.white,
                   buttonText: 'Refresh',
+                  buttonWidth: 130,
+                  buttonHeight: 46,
+                  buttonTextStyle: const TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'RobotoMono',
+                    color: Colors.white,
+                  ),
                 ),
                 titleTextStyle: const TextStyle(
                   fontSize: 25,
-                  fontFamily: 'BebasNeue',
+                  fontFamily: 'RobotoMono',
                 ),
                 subTitleTextStyle: const TextStyle(
                   fontSize: 20,
-                  fontFamily: 'BebasNeue',
+                  fontFamily: 'RobotoMono',
                 ),
                 onButtonClick: _getData,
               ),
@@ -179,7 +253,7 @@ class _MailPageState extends State<MailPage> {
 
   void _changePlaceHolderImage(String? newValue) {
     if (newValue == 'Image') {
-      placeholderImage = 'assets/loader.png';
+      placeholderImage = 'assets/loading.jpeg';
     } else if (newValue == 'SVG') {
       placeholderImage = Vectors.keyReleaseIllustration;
     } else if (newValue == 'Flare') {
