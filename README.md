@@ -6,7 +6,7 @@ A Flutter package allows you to add placeholder content while loading or empty i
 
 ## Preview
 
-<img src="https://github.com/SimformSolutionsPvtLtd/flutter_ss_placeholder_view/blob/main/preview/placeholderview.gif">
+<img src="https://github.com/SimformSolutionsPvtLtd/flutter_ss_placeholder_view/blob/main/preview/placeholderview.gif" width="400" height="711">
 
 ## Installing
 
