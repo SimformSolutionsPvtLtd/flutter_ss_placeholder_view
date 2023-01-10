@@ -1,12 +1,12 @@
 # SSPlaceholderView
 
-[![Build](https://github.com/SimformSolutionsPvtLtd/flutter_showcaseview/workflows/Build/badge.svg?branch=master)](https://github.com/SimformSolutionsPvtLtd/flutter_showcaseview/actions) [![ssplaceholderview](https://img.shields.io/pub/v/showcaseview?label=showcaseview)](https://pub.dev/packages/showcaseview)
+[![Build](https://github.com/SimformSolutionsPvtLtd/flutter_ss_placeholder_view/workflows/Build/badge.svg?branch=master)](https://github.com/SimformSolutionsPvtLtd/flutter_ss_placeholder_view/actions) [![ssplaceholderview](https://img.shields.io/pub/v/ssplaceholderview?label=ssplaceholderview)](https://pub.dev/packages/ssplaceholderview)
 
 A Flutter package allows you to add placeholder content while loading or empty items.
 
 ## Preview
 
-<img src="https://github.com/SimformSolutionsPvtLtd/flutter_ss_placeholder_view/blob/main/preview/placeholderview.gif" width="400" height="711">
+<img src="https://github.com/SimformSolutionsPvtLtd/flutter_ss_placeholder_view/blob/main/preview/placeholderview.gif">
 
 ## Installing
 
